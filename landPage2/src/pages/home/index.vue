@@ -23,9 +23,16 @@ export default {
   },
   mounted () {
     this.urlData = getQueryParams()
-
+    console.log('this.urlData', this.urlData)
     this.updateWindowHeight()
     window.addEventListener('resize', this.updateWindowHeight)
+    let params = {
+      ptype: 1, // 访问量
+      url: window.location.href || ''
+    }
+    // postVisitAndClickApi(params).then(res => {
+    //   console.log('访问量', res)
+    // })
   },
   beforeDestroy () {
     window.removeEventListener('resize', this.updateWindowHeight)
@@ -34,19 +41,18 @@ export default {
     toLinkFun () {
       this.isSpinning = true
       this.urlA = getCookie('url') || 'https://wri375.com/?t=1&d=OUtWwWQa#/register'
-      console.log('this.urlData.params', this.urlData.params)
-      if (this.urlData.params.ttclid) {
-        let params = {
-          ptype: 2, // 点击量
-          ttclid: this.urlData.params.ttclid,
-          url: getCookie('url') || '',
-          url2: window.location.href || ''
-        }
-        postVisitAndClickApi(params).then(res => {
-          console.log('点击量', res)
-          window.open(this.urlA, '_self') // '_blank' 表示在新窗口或标签页中打开
-        })
+      let params = {
+        ptype: 2, // 点击量
+        url: window.location.href || ''
       }
+      postVisitAndClickApi(params).then(res => {
+        console.log('点击量', res)
+        this.isSpinning = false
+      }).finally(() => {
+        setTimeout(() => {
+          window.open(this.urlA, '_self') // '_blank' 表示在新窗口或标签页中打开
+        }, 200)
+      })
     },
     updateWindowHeight () {
       this.windowHeight = window.innerHeight // 获取浏览器窗口的高度

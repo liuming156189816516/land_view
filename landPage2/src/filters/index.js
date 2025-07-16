@@ -24,29 +24,20 @@ export function getCookie (name) {
 
 /**
  * 解析http地址
- * @param {*} url
  * @returns
  */
-export function getQueryParams (url = '') {
-  const urlObj = new URL(url || window.location.href)
-  // 获取基础URL（不包含查询参数）
-  const baseUrl = urlObj.origin + urlObj.pathname
-  console.log('baseUrl', baseUrl)
-  console.log('urlObj', urlObj)
-  // 处理查询参数
+export function getQueryParams () {
+  const baseUrl = window.location.href
+  const urlArr = baseUrl.split('?')
+  const url = urlArr[0]
   const params = {}
-  urlObj.searchParams.forEach((value, key) => {
-    if (key in params) {
-      if (Array.isArray(params[key])) {
-        params[key].push(value)
-      } else {
-        params[key] = [params[key], value]
-      }
-    } else {
-      params[key] = value
-    }
+  const paramsArr = urlArr[1] ? urlArr[1].split('&') : []
+  paramsArr.forEach(item => {
+    let [key, value] = item.split('=')
+    params[key] = value
   })
   return {
+    url,
     baseUrl,
     params
   }
