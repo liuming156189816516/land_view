@@ -1,6 +1,6 @@
 <template>
   <div :style="{height: windowHeight+'px',maxWidth:windowWidth+'px'}" class="container" :class="[ isSpinning ? 'containerBack' : '']">
-    <img alt="" height="100%" src="@/assets/img/banner.gif" width="100%">
+    <img alt="" height="100%" src="https://static.dsvx.com/landPage1/banner.gif" width="100%">
     <div class="joinNowBack"/>
     <button :disabled="isSpinning" class="joinNow" @click="toLinkFun">
       <span class="btn_shadow"></span>
@@ -102,7 +102,7 @@ export default {
   left: 51.2%;
   top: calc(58% + 1px);
   transform: translateX(-50%);
-  background: url("~@/assets/img/button.png");
+  background: url("https://static.dsvx.com/landPage1/button.png");
   background-size: 100% 100%;
   width: 44.5%;
   height: calc(7% + 5px);
