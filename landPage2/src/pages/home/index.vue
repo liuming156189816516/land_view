@@ -1,9 +1,11 @@
 <template>
-  <div :style="{height: windowHeight+'px',maxWidth:windowWidth+'px'}" class="container">
+  <div :style="{height: windowHeight+'px',maxWidth:windowWidth+'px'}" class="container" :class="[ isSpinning ? 'containerBack' : '']">
     <img alt="" height="100%" src="@/assets/img/banner.jpg" width="100%">
+    <div class="joinNowBack" />
     <button :disabled="isSpinning" class="joinNow" @click="toLinkFun">
       <span class="btn_shadow"></span>
     </button>
+    <div :class="['loading', isSpinning ? '' : 'animation-close']" />
   </div>
 </template>
 
@@ -23,7 +25,6 @@ export default {
   },
   mounted () {
     this.urlData = getQueryParams()
-    console.log('this.urlData', this.urlData)
     this.updateWindowHeight()
     window.addEventListener('resize', this.updateWindowHeight)
     let params = {
@@ -47,9 +48,9 @@ export default {
       }
       postVisitAndClickApi(params).then(res => {
         console.log('点击量', res)
-        this.isSpinning = false
       }).finally(() => {
         setTimeout(() => {
+          this.isSpinning = false
           window.open(this.urlA, '_self') // '_blank' 表示在新窗口或标签页中打开
         }, 200)
       })
@@ -82,6 +83,15 @@ export default {
     transform: rotate(360deg);
   }
 }
+.joinNowBack{
+  position: absolute;
+  left: 51.2%;
+  width: 44.5%;
+  height: calc(7% + 4px);
+  top: calc(58% + 1px);
+  transform: translateX(-50%);
+  /*background: #000;*/
+}
 
 .joinNow {
   display: flex;
@@ -89,28 +99,32 @@ export default {
   justify-content: center;
   position: absolute;
   left: 50%;
+  top: calc(57% - 3px);
   transform: translateX(-50%);
   background: url("~@/assets/img/button.png");
   background-size: 100% 100%;
-  top: calc(57% + 3px);
-  width: 44%;
-  height: calc(7% + 0px);
-  animation: btn-tran 0.3s ease-in 2;
+  width: 46%;
+  height: calc(7% + 12px);
+  animation: btn-tran 3.2s ease-in infinite;
   border: none;
 }
 
 @keyframes btn-tran {
+
   0% {
     transform: translateX(-50%);
   }
-  25% {
-    transform: translateX(calc(-50% - 5px));
+  2.5% {
+    transform: translateX(-50%) rotate(-6deg);
   }
-  50% {
+  5% {
     transform: translateX(-50%);
   }
-  75% {
-    transform: translateX(calc(-50% + 5px));
+  7.5% {
+    transform: translateX(-50%) rotate(6deg);
+  }
+  10% {
+    transform: translateX(-50%);
   }
   100% {
     transform: translateX(-50%);
@@ -131,4 +145,42 @@ export default {
   box-shadow: none
 }
 
+.loading {
+  display: block;
+  position: absolute;
+  top: 50%;
+  left:50%;
+  width: 60px;
+  height: 60px;
+  text-align: center;
+  line-height: 60px;
+  transform: translate(-50%,-50%);
+  border-radius: 50%;
+  border: 6px solid rgba(200, 200, 200, 0.5);
+  border-top: 6px solid #0000008A;
+  animation: rotate 1s linear infinite;
+  z-index: 1000;
+}
+
+.containerBack::before {
+  content: "";
+  position: absolute;
+  top:0;
+  bottom:0;
+  left:0;
+  right:0;
+  background: #0000005A;
+  z-index: 999;
+}
+
+@keyframes rotate {
+  100% {
+    transform: translate(-50%,-50%) rotate(360deg);
+  }
+}
+
+.animation-close {
+  display: none;
+  animation-play-state: paused;
+}
 </style>
