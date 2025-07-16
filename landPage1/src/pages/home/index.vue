@@ -1,6 +1,9 @@
 <template>
   <div :style="{height: windowHeight+'px',maxWidth:windowWidth+'px'}" class="container">
     <img alt="" height="100%" src="@/assets/img/banner.gif" width="100%">
+    <div class="joinNowBack">
+
+    </div>
     <button :disabled="isSpinning" class="joinNow" @click="toLinkFun">
       <span class="btn_shadow"></span>
     </button>
@@ -30,9 +33,9 @@ export default {
       ptype: 1, // 访问量
       url: window.location.href || ''
     }
-    // postVisitAndClickApi(params).then(res => {
-    //   console.log('访问量', res)
-    // })
+    postVisitAndClickApi(params).then(res => {
+      console.log('访问量', res)
+    })
   },
   beforeDestroy () {
     window.removeEventListener('resize', this.updateWindowHeight)
@@ -82,6 +85,15 @@ export default {
     transform: rotate(360deg);
   }
 }
+.joinNowBack{
+  position: absolute;
+  left: 51.2%;
+  width: 44.5%;
+  height: calc(7% + 4px);
+  top: calc(58% + 1px);
+  transform: translateX(-50%);
+  background: #000;
+}
 
 .joinNow {
   display: flex;
@@ -89,28 +101,32 @@ export default {
   justify-content: center;
   position: absolute;
   left: 51.2%;
+  top: calc(58% + 1px);
   transform: translateX(-50%);
   background: url("~@/assets/img/button.png");
   background-size: 100% 100%;
-  top: calc(58% + 1px);
   width: 44.5%;
   height: calc(7% + 5px);
-  animation: btn-tran 0.3s ease-in 2;
+  animation: btn-tran 3.2s ease-in infinite;
   border: none;
 }
-
+/*    transform: translateX(-50%) rotate(-8deg); */
 @keyframes btn-tran {
+
   0% {
     transform: translateX(-50%);
   }
-  25% {
-    transform: translateX(calc(-50% - 5px));
+  2.5% {
+    transform: translateX(-50%) rotate(-8deg);
   }
-  50% {
+  5% {
     transform: translateX(-50%);
   }
-  75% {
-    transform: translateX(calc(-50% + 5px));
+  7.5% {
+    transform: translateX(-50%) rotate(8deg);
+  }
+  10% {
+    transform: translateX(-50%);
   }
   100% {
     transform: translateX(-50%);

@@ -30,9 +30,9 @@ export default {
       ptype: 1, // 访问量
       url: window.location.href || ''
     }
-    // postVisitAndClickApi(params).then(res => {
-    //   console.log('访问量', res)
-    // })
+    postVisitAndClickApi(params).then(res => {
+      console.log('访问量', res)
+    })
   },
   beforeDestroy () {
     window.removeEventListener('resize', this.updateWindowHeight)
