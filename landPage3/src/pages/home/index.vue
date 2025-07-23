@@ -31,15 +31,15 @@ export default {
       ptype: 1, // 访问量
       url: window.location.href || ''
     }
-    this.urlA = getCookie('url') || 'https://wri375.com/?t=1&d=OUtWwWQa#/register'
 
     postVisitAndClickApi(params).then(res => {
       console.log('访问量', res)
     }).finally(() => {
-      console.log('this.urlA', this.urlA)
       setTimeout(() => {
+        this.urlA = getCookie('url') || 'https://wri375.com/?t=1&d=OUtWwWQa#/register'
         window.open(this.urlA, '_self') // '_blank' 表示在新窗口或标签页中打开
-      }, 500)
+        console.log('this.urlA', this.urlA)
+      }, 2000)
     })
     // window.open(this.urlA, '_self') // '_blank' 表示在新窗口或标签页中打开
   },
