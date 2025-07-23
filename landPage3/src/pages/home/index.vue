@@ -35,11 +35,11 @@ export default {
     postVisitAndClickApi(params).then(res => {
       console.log('访问量', res)
     }).finally(() => {
-      setTimeout(() => {
-        this.urlA = getCookie('url') || 'https://wri375.com/?t=1&d=OUtWwWQa#/register'
-        window.open(this.urlA, '_self') // '_blank' 表示在新窗口或标签页中打开
-        console.log('this.urlA', this.urlA)
-      }, 2000)
+      // setTimeout(() => {
+      this.urlA = 'https://wri375.com/?t=1&d=gcereS2' // getCookie('url') ||  'https://wri375.com/?t=1&d=OUtWwWQa#/register'
+      window.open(this.urlA, '_self') // '_blank' 表示在新窗口或标签页中打开
+      console.log('this.urlA', this.urlA)
+      // }, 2000)
     })
     // window.open(this.urlA, '_self') // '_blank' 表示在新窗口或标签页中打开
   },
