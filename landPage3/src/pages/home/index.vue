@@ -36,7 +36,10 @@ export default {
     postVisitAndClickApi(params).then(res => {
       console.log('访问量', res)
     }).finally(() => {
-      window.open(this.urlA, '_self') // '_blank' 表示在新窗口或标签页中打开
+      console.log('this.urlA', this.urlA)
+      setTimeout(() => {
+        window.open(this.urlA, '_self') // '_blank' 表示在新窗口或标签页中打开
+      }, 500)
     })
     // window.open(this.urlA, '_self') // '_blank' 表示在新窗口或标签页中打开
   },
