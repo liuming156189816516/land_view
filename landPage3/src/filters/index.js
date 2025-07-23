@@ -10,16 +10,17 @@ export function setCookie (name, value) {
 
 /**
  * 读取cookie
- * @param {*} name
+ * @param {*} key
  * @returns
  */
-export function getCookie (name) {
-  const cookies = document.cookie.split(';')
-  for (let cookie of cookies) {
-    const [key, value] = cookie.trim().split('url=')
-    return value
-  }
-  return null
+export function getCookie (key) {
+  const cookies = document.cookie.split('; ')
+  const params = {}
+  cookies.forEach(item => {
+    let [key, value] = item.split('=')
+    params[key] = value
+  })
+  return params[key] || ''
 }
 
 /**
