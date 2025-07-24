@@ -14,12 +14,13 @@ export function setCookie (name, value) {
  * @returns
  */
 export function getCookie (key) {
-  const cookies = document.cookie.split('; ')
+  const cookies = document.cookie.split(';')
   const params = {}
-  cookies.forEach(item => {
-    let [key, value] = item.split('=')
-    params[key] = value
-  })
+  for (let cookie of cookies) {
+    const match = cookie.trim().match(/^([^=]*?)=(.*)$/)
+    let key = match ? match[1] : cookie.trim()
+    params[key] = match ? match[2] : ''
+  }
   return params[key] || ''
 }
 
