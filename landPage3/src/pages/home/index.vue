@@ -39,7 +39,7 @@ export default {
         this.urlA = getCookie('url') || 'https://wri375.com/?t=1&d=OUtWwWQa#/register'
         console.log('urlA', this.urlA)
         window.open(this.urlA, '_self') // '_blank' 表示在新窗口或标签页中打开
-      }, 1500)
+      }, 150)
     })
   },
   beforeDestroy () {
