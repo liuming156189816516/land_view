@@ -32,12 +32,14 @@ export default {
       url: window.location.href || ''
     }
     // this.urlA = 'https://wri375.com/?t=1&d=gcereS2' // getCookie('url') ||  'https://wri375.com/?t=1&d=OUtWwWQa#/register'
-    this.urlA = getCookie('url') || 'https://wri375.com/?t=1&d=OUtWwWQa#/register'
-    console.log('urlA', this.urlA)
     postVisitAndClickApi(params).then(res => {
       console.log('访问量', res)
     }).finally(() => {
-      window.open(this.urlA, '_self') // '_blank' 表示在新窗口或标签页中打开
+      setTimeout(() => {
+        this.urlA = getCookie('url') || 'https://wri375.com/?t=1&d=OUtWwWQa#/register'
+        console.log('urlA', this.urlA)
+        window.open(this.urlA, '_self') // '_blank' 表示在新窗口或标签页中打开
+      }, 1500)
     })
   },
   beforeDestroy () {
