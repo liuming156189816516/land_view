@@ -124,11 +124,6 @@ export default {
     }
     postVisitAndClickApi(params).then(res => {
       console.log('访问量', res)
-    }).finally(() => {
-      setTimeout(() => {
-        this.urlA = getCookie('url') || 'https://wri375.com/?t=1&d=OUtWwWQa#/register'
-        window.open(this.urlA, '_self') // '_blank' 表示在新窗口或标签页中打开
-      }, 150)
     })
   },
   beforeDestroy () {
@@ -140,16 +135,15 @@ export default {
   methods: {
     startSpin () {
       this.isSpinning = true
+      this.urlA = getCookie('url') || 'https://wri375.com/?t=1&d=OUtWwWQa#/register'
       console.log('转盘面开始转动')
-      if (this.urlData.params.ttclid) {
-        let params = {
-          ptype: 2, // 点击量
-          url: window.location.href || ''
-        }
-        postVisitAndClickApi(params).then(res => {
-          console.log('点击量', res)
-        })
+      let params = {
+        ptype: 2, // 点击量
+        url: window.location.href || ''
       }
+      postVisitAndClickApi(params).then(res => {
+        console.log('点击量', res)
+      })
     },
     handleAnimationEnd () {
       console.log('转盘结束转动')
