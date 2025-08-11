@@ -10,43 +10,38 @@ export function setCookie (name, value) {
 
 /**
  * 读取cookie
- * @param {*} name
+ * @param {*} key
  * @returns
  */
-export function getCookie (name) {
+export function getCookie (key) {
   const cookies = document.cookie.split(';')
+  const params = {}
   for (let cookie of cookies) {
-    const [key, value] = cookie.trim().split('url=')
-    return value
+    const match = cookie.trim().match(/^([^=]*?)=(.*)$/)
+    let key = match ? match[1] : cookie.trim()
+    params[key] = match ? match[2] : ''
   }
-  return null
+  return params[key] || ''
 }
+
 
 /**
  * 解析http地址
  * @param {*} url
  * @returns
  */
-export function getQueryParams (url = '') {
-  const urlObj = new URL(url || window.location.href)
-  // 获取基础URL（不包含查询参数）
-  const baseUrl = urlObj.origin + urlObj.pathname
-  console.log('baseUrl', baseUrl)
-  console.log('urlObj', urlObj)
-  // 处理查询参数
+export function getQueryParams () {
+  const baseUrl = window.location.href
+  const urlArr = baseUrl.split('?')
+  const url = urlArr[0]
   const params = {}
-  urlObj.searchParams.forEach((value, key) => {
-    if (key in params) {
-      if (Array.isArray(params[key])) {
-        params[key].push(value)
-      } else {
-        params[key] = [params[key], value]
-      }
-    } else {
-      params[key] = value
-    }
+  const paramsArr = urlArr[1] ? urlArr[1].split('&') : []
+  paramsArr.forEach(item => {
+    let [key, value] = item.split('=')
+    params[key] = value
   })
   return {
+    url,
     baseUrl,
     params
   }
