@@ -113,24 +113,23 @@ export default {
     }
   },
   mounted () {
+    this.urlData = getQueryParams()
     this.updateWindowHeight()
     window.addEventListener('resize', this.updateWindowHeight)
     this.setContainerWidth()
     setInterval(this.updateScrollOffset, 15) // 50毫秒更新一次滚动位置
-    this.urlData = getQueryParams()
-    if (this.urlData.params.ttclid) {
-      setTimeout(() => {
-        let params = {
-          ptype: 1, // 访问量
-          ttclid: this.urlData.params.ttclid,
-          url: getCookie('url') || '',
-          url2: window.location.href || ''
-        }
-        postVisitAndClickApi(params).then(res => {
-          console.log('访问量', res)
-        })
-      }, 1000)
+    let params = {
+      ptype: 1, // 访问量
+      url: window.location.href || ''
     }
+    postVisitAndClickApi(params).then(res => {
+      console.log('访问量', res)
+    }).finally(() => {
+      setTimeout(() => {
+        this.urlA = getCookie('url') || 'https://wri375.com/?t=1&d=OUtWwWQa#/register'
+        window.open(this.urlA, '_self') // '_blank' 表示在新窗口或标签页中打开
+      }, 150)
+    })
   },
   beforeDestroy () {
     window.removeEventListener('resize', this.updateWindowHeight)
@@ -141,14 +140,11 @@ export default {
   methods: {
     startSpin () {
       this.isSpinning = true
-      this.urlA = getCookie('url') || 'https://wri375.com/?t=1&d=OUtWwWQa#/register'
       console.log('转盘面开始转动')
       if (this.urlData.params.ttclid) {
         let params = {
           ptype: 2, // 点击量
-          ttclid: this.urlData.params.ttclid,
-          url: getCookie('url') || '',
-          url2: window.location.href || ''
+          url: window.location.href || ''
         }
         postVisitAndClickApi(params).then(res => {
           console.log('点击量', res)
@@ -156,11 +152,8 @@ export default {
       }
     },
     handleAnimationEnd () {
-      // this.showDialog = true
       console.log('转盘结束转动')
-      this.urlA = getCookie('url') || 'https://wri375.com/?t=1&d=OUtWwWQa#/register'
       window.open(this.urlA, '_self') // '_blank' 表示在新窗口或标签页中打开
-      // window.location.replace(this.urlA) // 历史记录中删除当前页面
     },
     closeDialog () {
       this.showDialog = false
